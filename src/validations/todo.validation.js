@@ -10,3 +10,8 @@ export const createTodoSchema = Joi.object({
 export const updateTodoSchema = Joi.object({
     name: Joi.string().trim().min(1).max(255),
 }).min(1);
+
+// Schema cho param :id: phải là số nguyên dương (vd: 1, 42).
+export const idParamSchema = Joi.object({
+    id: Joi.number().integer().positive().required(),
+});

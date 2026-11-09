@@ -11,6 +11,7 @@ export const viMessages = {
     'number.integer': '{{#label}} phải là số nguyên',
     'number.positive': '{{#label}} phải là số dương',
     'number.max': '{{#label}} vượt quá giới hạn cho phép',
+    'number.min': '{{#label}} phải lớn hơn hoặc bằng {{#limit}}',
     'object.min': '{{#label}} phải có ít nhất {#limit} trường',
     'object.unknown': '{{#label}} không được phép',
 };

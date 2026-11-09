@@ -1,11 +1,17 @@
 import { pool } from '../config/db.js';
 
 const Todos = {
-    getAllTodos: async () => {
-        const [rows] = await pool.execute(
-            'SELECT id, name, create_time FROM todos ORDER BY id DESC'
+    getAllTodos: async ({ limit, offset }) => {
+        const [rows] = await pool.query(
+            'SELECT id, name, create_time FROM todos ORDER BY id DESC LIMIT ? OFFSET ?',
+            [limit, offset]
         );
         return rows;
+    },
+
+    countTodos: async () => {
+        const [rows] = await pool.execute('SELECT COUNT(*) AS total FROM todos');
+        return rows[0].total;
     },
 
     getTodoById: async (id) => {

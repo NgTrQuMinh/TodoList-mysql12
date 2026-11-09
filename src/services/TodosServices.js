@@ -2,8 +2,17 @@ import Todos from '../model/Todos.js';
 import { AppError } from '../utils/appError.js';
 
 const TodosServices = {
-    getAllTodos: async () => {
-        return Todos.getAllTodos();
+    getAllTodos: async ({ page, limit }) => {
+        const offset = (page - 1) * limit;
+        const [items, total] = await Promise.all([
+            Todos.getAllTodos({ limit, offset }),
+            Todos.countTodos(),
+        ]);
+
+        return {
+            items,
+            pagination: { page, limit, total, totalPages: Math.ceil(total / limit) },
+        };
     },
 
     getTodoById: async (id) => {

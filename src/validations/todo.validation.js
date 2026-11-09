@@ -24,3 +24,9 @@ export const updateTodoSchema = Joi.object({
 export const idParamSchema = Joi.object({
     id: Joi.number().integer().positive().max(2147483647).required().label('ID'),
 });
+
+// Schema cho GET /todos?page=&limit=: có default, chặn giá trị xấu.
+export const listQuerySchema = Joi.object({
+    page: Joi.number().integer().min(1).default(1).label('Trang'),
+    limit: Joi.number().integer().min(1).max(100).default(10).label('Số lượng'),
+});

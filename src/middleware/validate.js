@@ -38,3 +38,21 @@ export const validateParams = (schema) => (req, res, next) => {
     // controller vẫn dùng Number(req.params.id).
     next();
 };
+
+// Middleware validate req.query (dùng cho phân trang GET /todos).
+export const validateQuery = (schema) => (req, res, next) => {
+    const { error, value } = schema.validate(req.query, {
+        abortEarly: false,
+        convert: true, // "2" -> 2
+        stripUnknown: true, // bỏ query param lạ
+        messages: viMessages,
+    });
+
+    if (error) {
+        return next(new AppError(buildMessage(error), 400));
+    }
+
+    // req.query là read-only ở Express 5 nên gắn giá trị đã validate vào req.validatedQuery.
+    req.validatedQuery = value;
+    next();
+};

@@ -4,8 +4,9 @@ import { sendResponse } from '../utils/sendResponse.js';
 
 const TodosController = {
     getAllTodos: asyncHandler(async (req, res) => {
-        const todos = await TodosServices.getAllTodos();
-        sendResponse(res, 200, todos);
+        const { page, limit } = req.validatedQuery;
+        const result = await TodosServices.getAllTodos({ page, limit });
+        sendResponse(res, 200, result);
     }),
 
     getTodoById: asyncHandler(async (req, res) => {

@@ -1,4 +1,5 @@
 import { AppError } from '../utils/appError.js';
+import { viMessages } from '../validations/messages.js';
 
 // Gom toàn bộ message lỗi của Joi thành 1 chuỗi để trả về cho client.
 const buildMessage = (error) => error.details.map((d) => d.message).join(', ');
@@ -8,6 +9,7 @@ export const validate = (schema) => (req, res, next) => {
     const { error, value } = schema.validate(req.body, {
         abortEarly: false, // trả về tất cả lỗi thay vì dừng ở lỗi đầu tiên
         stripUnknown: true, // loại bỏ field không khai báo (chống mass-assignment)
+        messages: viMessages, // message lỗi tiếng Việt dùng chung
     });
 
     if (error) {
@@ -24,6 +26,7 @@ export const validateParams = (schema) => (req, res, next) => {
     const { error } = schema.validate(req.params, {
         abortEarly: false,
         convert: true, // Joi tự ép "1" -> 1 để kiểm tra kiểu number
+        messages: viMessages,
     });
 
     if (error) {

@@ -6,8 +6,11 @@ export const viMessages = {
     'string.empty': '{{#label}} không được để trống',
     'string.min': '{{#label}} phải có ít nhất {#limit} ký tự',
     'string.max': '{{#label}} không được vượt quá {#limit} ký tự',
+    'string.pattern.base': '{{#label}} chứa ký tự không hợp lệ',
     'number.base': '{{#label}} phải là số',
     'number.integer': '{{#label}} phải là số nguyên',
     'number.positive': '{{#label}} phải là số dương',
+    'number.max': '{{#label}} vượt quá giới hạn cho phép',
     'object.min': '{{#label}} phải có ít nhất {#limit} trường',
+    'object.unknown': '{{#label}} không được phép',
 };

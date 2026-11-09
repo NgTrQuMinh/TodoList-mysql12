@@ -8,7 +8,7 @@ const buildMessage = (error) => error.details.map((d) => d.message).join(', ');
 export const validate = (schema) => (req, res, next) => {
     const { error, value } = schema.validate(req.body, {
         abortEarly: false, // trả về tất cả lỗi thay vì dừng ở lỗi đầu tiên
-        stripUnknown: true, // loại bỏ field không khai báo (chống mass-assignment)
+        allowUnknown: false, // field lạ -> lỗi 400 (chặn mass-assignment)
         messages: viMessages, // message lỗi tiếng Việt dùng chung
     });
 
@@ -16,7 +16,7 @@ export const validate = (schema) => (req, res, next) => {
         return next(new AppError(buildMessage(error), 400));
     }
 
-    // Gán lại body đã được làm sạch (trim, bỏ field lạ) rồi đi tiếp.
+    // Gán lại body đã được làm sạch (trim) rồi đi tiếp.
     req.body = value;
     next();
 };
@@ -26,6 +26,7 @@ export const validateParams = (schema) => (req, res, next) => {
     const { error } = schema.validate(req.params, {
         abortEarly: false,
         convert: true, // Joi tự ép "1" -> 1 để kiểm tra kiểu number
+        stripUnknown: true,
         messages: viMessages,
     });
 

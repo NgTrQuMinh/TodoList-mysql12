@@ -1,11 +1,14 @@
 import express from 'express';
 import TodosController from '../controller/TodosController.js';
 
+import { validate } from '../middleware/validate.js';
+import { createTodoSchema } from '../validations/todo.validation.js';
+
 const router = express.Router();
 
 router.get('/', TodosController.getAllTodos);
 router.get('/:id', TodosController.getTodoById);
-router.post('/', TodosController.createTodo);
+router.post('/', validate(createTodoSchema), TodosController.createTodo);
 router.put('/:id', TodosController.updateTodo);
 router.delete('/:id', TodosController.deleteTodo);
 

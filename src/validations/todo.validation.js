@@ -1,5 +1,12 @@
 import Joi from 'joi';
 
+// Schema cho POST /todos: bắt buộc có name, tự trim, độ dài 1-255.
 export const createTodoSchema = Joi.object({
     name: Joi.string().trim().min(1).max(255).required(),
 });
+
+// Schema cho PUT /todos/:id: name là tùy chọn (cập nhật từng phần),
+// nhưng body phải có ít nhất 1 field (.min(1)) để tránh gửi {} vô nghĩa.
+export const updateTodoSchema = Joi.object({
+    name: Joi.string().trim().min(1).max(255),
+}).min(1);
